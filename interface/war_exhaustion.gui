@@ -1,0 +1,46 @@
+guiTypes = {
+
+    containerWindowType = {
+        name = "war_exhaustion_container"
+        position = { x = 0 y = 0 }
+		size = { width = 102%% height = 107%% } # not 100% so it can reach the edges... not sure why it works like this; could just be me?
+        
+        # Need to put the stuff in a subcontainer or else the area in which it can be moved around is severely limited; idk why
+        containerWindowType = {
+            name     = "war_exhaustion_container_2"
+            position = { x = 1048 y = 4 } # to the right of the nukes # (487, 30) for right under the fuel section
+            size     = { width = 70 height = 26 }
+            moveable = yes
+            
+            background = {
+                name = "background"
+                spriteType = "GFX_generic_box_small"
+                alwaystransparent = no
+            }
+            
+            iconType = {
+                name = "war_exhaustion_icon"
+                spriteType = "GFX_war_exhaustion"
+                position = { x = 3 y = -3 }
+                Orientation = "UPPER_LEFT"
+
+                pdx_tooltip = "war_exhaustion_tab"
+                pdx_tooltip_delayed = "war_exhaustion_desc"
+            }
+            
+            instantTextBoxType = {
+                name      = "war_exhaustion_value"
+                position  = { x = 31 y = 4 }
+                font      = "hoi_18mbs"
+                text      = "war_exhaustion_value"
+                format    = center
+                maxWidth  = 40
+                maxHeight = 23
+                fixedsize = yes
+
+                pdx_tooltip = "war_exhaustion_tab"
+                pdx_tooltip_delayed = "war_exhaustion_desc"
+            }
+        }
+    }
+}

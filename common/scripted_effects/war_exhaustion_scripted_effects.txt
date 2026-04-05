@@ -1,0 +1,247 @@
+set_WE_active = { set_variable = { war_exhaustion_start_up = 3 } }
+set_WE_month_2 = { set_variable = { war_exhaustion_start_up = 2 } }
+set_WE_month_1 = { set_variable = { war_exhaustion_start_up = 1 } }
+set_WE_month_0 = { set_variable = { war_exhaustion_start_up = 0 } }
+
+verify_WE_to_WE_max = {
+	#if = {
+	#	limit = {
+	#		check_variable = { war_exhaustion_value > war_exhaustion_max_value }
+	#	}
+	#	set_variable = { war_exhaustion_value = war_exhaustion_max_value }
+	#}
+	
+	if = {
+		limit = {
+			check_variable = { war_exhaustion_value > 1 }
+		}
+		set_variable = { war_exhaustion_value = 1 }
+	}
+	if = {
+		limit = {
+			check_variable = { war_exhaustion_value < 0 }
+		}
+		set_variable = { war_exhaustion_value = 0 }
+	}
+}
+
+debug_effect = {
+	add_resource = {
+		type = oil
+		amount = 150
+		state = 2
+	}
+}
+
+change_WE_value_effect = {
+	add_to_variable = { war_exhaustion_value = temp_war_exhaustion_value }
+}
+
+reset_WE_var = { 
+	set_variable = { war_exhaustion_max_value = 1 }
+	set_variable = { war_exhaustion_weekly_change = 0 }
+	
+	set_variable = {
+		var = war_exhaustion_lenght_of_war_impact
+		value = ROOT.days_at_war
+	}
+	
+	divide_variable = {
+		var = war_exhaustion_lenght_of_war_impact
+		value = 58400
+	}
+	
+	add_to_variable = {
+		var = war_exhaustion_weekly_change
+		value = war_exhaustion_lenght_of_war_impact
+	}
+	
+	
+	
+	if = {
+		limit = { has_war = no }
+		
+		subtract_from_variable = { war_exhaustion_max_value = 0.70 }
+		subtract_from_variable = { war_exhaustion_weekly_change = 0.007 }
+	}
+	else = {
+		## if = { limit = { has_WE_active = yes } 
+		##	 add_to_variable = { war_exhaustion_weekly_change = 0.005 }
+		## }
+		## else_if = { limit = { has_war = yes } 
+		##	add_to_variable = { war_exhaustion_weekly_change = 0.002 }
+		## }
+		
+		if = { 
+			limit = {
+				AND = {
+					has_offensive_war = yes 
+					has_war_with_major = yes
+				}
+			} 
+			add_to_variable = { war_exhaustion_weekly_change = 0.003 }
+		}
+		else_if = { 
+			limit = { 
+				AND = {
+					has_defensive_war = yes
+					has_war_with_major = yes
+				}
+			} 
+			add_to_variable = { war_exhaustion_weekly_change = 0.002 }
+		}
+		else_if = { 
+			limit = { 
+				AND = {
+					has_offensive_war = yes
+					has_war_with_major = no
+				}
+			} 
+			add_to_variable = { war_exhaustion_weekly_change = 0.002 }
+		}
+		else_if = { 
+			limit = { 
+				AND = {
+					has_defensive_war = yes
+					has_war_with_major = no
+				}
+			} 
+			add_to_variable = { war_exhaustion_weekly_change = 0.001 }
+		}
+	}
+		
+	if = { limit = { has_idea = civilian_economy } 
+		add_to_variable = { war_exhaustion_weekly_change = -0.005 }
+	}
+	
+	else_if = { limit = { has_idea = low_economic_mobilisation } 
+		add_to_variable = { war_exhaustion_weekly_change = 0.002 }
+	}
+	
+	else_if = { limit = { has_idea = partial_economic_mobilisation } 
+		add_to_variable = { war_exhaustion_weekly_change = 0.003 }
+	}
+	
+	else_if = { limit = { has_idea = war_economy } 
+		add_to_variable = { war_exhaustion_weekly_change = 0.005 }
+	}
+	
+	else_if = { limit = { has_idea = tot_economic_mobilisation } 
+		add_to_variable = { war_exhaustion_weekly_change = 0.008 }
+	}
+	
+	if = { limit = { has_idea = disarmed_nation } 
+		add_to_variable = { war_exhaustion_weekly_change = -0.005 }
+	}
+	else_if = { limit = { has_idea = volunteer_only } 
+		add_to_variable = { war_exhaustion_weekly_change = -0.003 }
+	}
+	else_if = { limit = { has_idea = extensive_conscription } 
+		add_to_variable = { war_exhaustion_weekly_change = 0.002 }
+	}
+	else_if = { limit = { has_idea = service_by_requirement } 
+		add_to_variable = { war_exhaustion_weekly_change = 0.003 }
+	}
+	else_if = { limit = { has_idea = all_adults_serve } 
+		add_to_variable = { war_exhaustion_weekly_change = 0.005 }
+	}
+	else_if = { limit = { has_idea = scraping_the_barrel } 
+		add_to_variable = { war_exhaustion_weekly_change = 0.008 }
+	}
+	
+	set_variable = {
+		var = war_exhaustion_surrender_progress_impact
+		value = ROOT.surrender_progress
+	}
+	
+	divide_variable = {
+		var = war_exhaustion_surrender_progress_impact
+		value = 100
+	}
+		
+	add_to_variable = {
+		var = war_exhaustion_weekly_change
+		value = war_exhaustion_surrender_progress_impact
+	}
+	
+	# CAPITULATION STOPGAP MEASURE
+	
+	if = {
+		limit = { has_capitulated = yes }
+	
+		set_variable = { war_exhaustion_weekly_change = 0 }
+	}
+	
+	# STATE CAPACITY BUFFER
+	# if = {
+	#	limit = { stability > 0.55 }
+	#	subtract_from_variable = { war_exhaustion_weekly_change = 0.002 }
+	# }
+	
+	# if = {
+	#	limit = { war_support > 0.60 }
+	#	subtract_from_variable = { war_exhaustion_weekly_change = 0.002 }
+	# }
+	
+	# COLLAPSE INERTIA
+	
+	# if = {
+	#	limit = { check_variable = { war_exhaustion_value > 0.90 } }
+	#	multiply_variable = { war_exhaustion_weekly_change = 0.6 }
+	# }
+
+	# PSYCHOLOGICAL SATURATION
+	
+	if = {
+		limit = { check_variable = { war_exhaustion_value > 0.40 } }
+		multiply_variable = { war_exhaustion_weekly_change = 0.80 }
+	}
+	if = {
+		limit = { check_variable = { war_exhaustion_value > 0.60 } }
+		multiply_variable = { war_exhaustion_weekly_change = 0.60 }
+	}
+	if = {
+		limit = { check_variable = { war_exhaustion_value > 0.75 } }
+		multiply_variable = { war_exhaustion_weekly_change = 0.40 }
+	}
+	if = {
+		limit = { check_variable = { war_exhaustion_value > 0.88 } }
+		multiply_variable = { war_exhaustion_weekly_change = 0.25 }
+	}
+	
+	# END PSYCHOLOGICAL SATURATION
+
+	add_to_variable = { war_exhaustion_value = war_exhaustion_weekly_change }
+	multiply_variable = { war_exhaustion_weekly_change = 100 }
+	
+	verify_WE_to_WE_max = yes
+
+	set_variable = { we_stability_factor = war_exhaustion_value }
+	multiply_variable = { we_stability_factor = -0.75 }
+	
+	set_variable = { we_war_support_factor = war_exhaustion_value }
+	multiply_variable = { we_war_support_factor = -1.5 }
+	
+	set_variable = { we_repair_speed_building_factor = war_exhaustion_value }
+	multiply_variable = { we_repair_speed_building_factor = -0.35 }
+	
+	set_variable = { we_army_morale_factor = war_exhaustion_value }
+	multiply_variable = { we_army_morale_factor = -0.25 }
+	
+	set_variable = { we_minimum_training_level = war_exhaustion_value }
+	multiply_variable = { we_minimum_training_level = 0.25 }
+	
+	set_variable = { we_resistance_target = war_exhaustion_value }
+	multiply_variable = { we_resistance_target = 0.25 }
+	
+	set_variable = { we_resistance_growth = war_exhaustion_value }
+	multiply_variable = { we_resistance_growth = 0.25 }
+	
+	if = {
+		limit = {
+			NOT = {	has_dynamic_modifier = { modifier = war_exhaustion_modifiers } }
+		}
+		add_dynamic_modifier = { modifier = war_exhaustion_modifiers }
+	}
+	force_update_dynamic_modifier = yes
+}

@@ -1,0 +1,17 @@
+has_WE_active = { check_variable = { war_exhaustion_start_up = 3 } }
+has_WE_month_2 = { check_variable = { war_exhaustion_start_up = 2 } }
+has_WE_month_1 = { check_variable = { war_exhaustion_start_up = 1 } }
+has_WE_month_0 = { check_variable = { war_exhaustion_start_up = 0 } }
+
+has_WE_value_greater_trigger = { 
+   custom_trigger_tooltip = {
+		tooltip = has_WE_value_greater_trigger_tt
+		check_variable = { war_exhaustion_value > temp_war_exhaustion_value } 
+   }
+}
+has_WE_value_lesser_trigger = { 
+   custom_trigger_tooltip = {
+		tooltip = has_WE_value_lesser_trigger_tt
+		check_variable = { war_exhaustion_value < temp_war_exhaustion_value } 
+   }
+}

@@ -1,0 +1,22 @@
+war_exhaustion_modifiers = {
+    enable = { always = yes }
+    remove_trigger = {
+		AND = {
+			has_war = no 
+			has_WE_active = no
+		}
+    }
+	stability_factor = we_stability_factor
+	war_support_factor = we_war_support_factor
+	repair_speed_arms_factory_factor = we_repair_speed_building_factor
+	repair_speed_industrial_complex_factor = we_repair_speed_building_factor
+	repair_speed_infrastructure_factor = we_repair_speed_building_factor
+	resistance_target = we_resistance_target
+	resistance_growth = we_resistance_growth
+	industrial_capacity_factory = we_army_morale_factor
+	production_speed_buildings_factor = we_repair_speed_building_factor
+	army_morale_factor = we_army_morale_factor							# -30%
+	naval_morale_factor = we_army_morale_factor
+	air_accidents_factor = we_resistance_growth
+	planning_speed = we_army_morale_factor
+}

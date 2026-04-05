@@ -1,0 +1,11 @@
+war_exhaustion_category = {
+	priority = 9999
+	
+	icon = SOV_propaganda
+
+	picture = GFX_decision_cat_war_exhaustion
+
+	visible = {
+		check_variable = { war_exhaustion_value > 0.0 }
+	}
+}
