@@ -41,6 +41,7 @@ reset_WE_var = {
 	set_variable = { war_exhaustion_max_value = 1 }
 	set_variable = { war_exhaustion_weekly_change = 0 }
 	
+	# LENGTH OF WAR — gentler linear ramp (divisor increased from 58400 to 175200)
 	set_variable = {
 		var = war_exhaustion_lenght_of_war_impact
 		value = ROOT.days_at_war
@@ -48,7 +49,7 @@ reset_WE_var = {
 	
 	divide_variable = {
 		var = war_exhaustion_lenght_of_war_impact
-		value = 58400
+		value = 175200
 	}
 	
 	add_to_variable = {
@@ -56,22 +57,26 @@ reset_WE_var = {
 		value = war_exhaustion_lenght_of_war_impact
 	}
 	
-	
-	
 	if = {
 		limit = { has_war = no }
 		
 		subtract_from_variable = { war_exhaustion_max_value = 0.70 }
-		subtract_from_variable = { war_exhaustion_weekly_change = 0.007 }
+		
+		# PEACETIME RECOVERY — stability-gated, not free
+		if = {
+			limit = { has_stability > 0.60 }
+			subtract_from_variable = { war_exhaustion_weekly_change = 0.010 }
+		}
+		else_if = {
+			limit = { has_stability > 0.30 }
+			subtract_from_variable = { war_exhaustion_weekly_change = 0.005 }
+		}
+		# stability <= 0.30: no passive recovery
 	}
 	else = {
-		## if = { limit = { has_WE_active = yes } 
-		##	 add_to_variable = { war_exhaustion_weekly_change = 0.005 }
-		## }
-		## else_if = { limit = { has_war = yes } 
-		##	add_to_variable = { war_exhaustion_weekly_change = 0.002 }
-		## }
-		
+		# WAR TYPE BASE RATES
+		# Defensive wars now equal offensive — historically defenders suffer just as much
+		# Major vs minor gap maintained
 		if = { 
 			limit = {
 				AND = {
@@ -88,7 +93,7 @@ reset_WE_var = {
 					has_war_with_major = yes
 				}
 			} 
-			add_to_variable = { war_exhaustion_weekly_change = 0.002 }
+			add_to_variable = { war_exhaustion_weekly_change = 0.003 }
 		}
 		else_if = { 
 			limit = { 
@@ -106,107 +111,132 @@ reset_WE_var = {
 					has_war_with_major = no
 				}
 			} 
-			add_to_variable = { war_exhaustion_weekly_change = 0.001 }
+			add_to_variable = { war_exhaustion_weekly_change = 0.002 }
+		}
+		
+		# ECONOMY EXHAUSTION — continuous, baseline is civilian economy (CG expected = 0.35)
+		# Anything below 0.35 adds exhaustion proportionally
+		# Civilian economy (0.35): +0.000/week | Total mobilisation (0.15): +0.008/week
+		set_variable = { war_exhaustion_cg_factor = 0.35 }
+		subtract_from_variable = { war_exhaustion_cg_factor = modifier@consumer_goods_expected_value }
+		if = {
+			limit = { check_variable = { war_exhaustion_cg_factor < 0 } }
+			set_variable = { war_exhaustion_cg_factor = 0 }
+		}
+		multiply_variable = { war_exhaustion_cg_factor = 0.04 }
+		add_to_variable = { war_exhaustion_weekly_change = war_exhaustion_cg_factor }
+		
+		# CONSCRIPTION EXHAUSTION — continuous, baseline is volunteer only (conscription = 0.015)
+		# Volunteer only (0.015): +0.000/week | Scraping the barrel (0.25): +0.009/week
+		# Disarmed nation (0.01): tiny relief, clamped
+		set_variable = { war_exhaustion_conscription_factor = modifier@conscription }
+		subtract_from_variable = { war_exhaustion_conscription_factor = 0.015 }
+		multiply_variable = { war_exhaustion_conscription_factor = 0.040 }
+		if = {
+			limit = { check_variable = { war_exhaustion_conscription_factor < -0.001 } }
+			set_variable = { war_exhaustion_conscription_factor = -0.001 }
+		}
+		add_to_variable = { war_exhaustion_weekly_change = war_exhaustion_conscription_factor }
+		
+		# SURRENDER PROGRESS — dampened significantly (divisor 100 → 500)
+		# At 50% SP: +0.001/week instead of old +0.005/week
+		set_variable = {
+			var = war_exhaustion_surrender_progress_impact
+			value = ROOT.surrender_progress
+		}
+		divide_variable = {
+			var = war_exhaustion_surrender_progress_impact
+			value = 500
+		}
+		add_to_variable = {
+			var = war_exhaustion_weekly_change
+			value = war_exhaustion_surrender_progress_impact
 		}
 	}
-		
-	if = { limit = { has_idea = civilian_economy } 
-		add_to_variable = { war_exhaustion_weekly_change = -0.005 }
-	}
 	
-	else_if = { limit = { has_idea = low_economic_mobilisation } 
-		add_to_variable = { war_exhaustion_weekly_change = 0.002 }
-	}
-	
-	else_if = { limit = { has_idea = partial_economic_mobilisation } 
-		add_to_variable = { war_exhaustion_weekly_change = 0.003 }
-	}
-	
-	else_if = { limit = { has_idea = war_economy } 
-		add_to_variable = { war_exhaustion_weekly_change = 0.005 }
-	}
-	
-	else_if = { limit = { has_idea = tot_economic_mobilisation } 
-		add_to_variable = { war_exhaustion_weekly_change = 0.008 }
-	}
-	
-	if = { limit = { has_idea = disarmed_nation } 
-		add_to_variable = { war_exhaustion_weekly_change = -0.005 }
-	}
-	else_if = { limit = { has_idea = volunteer_only } 
-		add_to_variable = { war_exhaustion_weekly_change = -0.003 }
-	}
-	else_if = { limit = { has_idea = extensive_conscription } 
-		add_to_variable = { war_exhaustion_weekly_change = 0.002 }
-	}
-	else_if = { limit = { has_idea = service_by_requirement } 
-		add_to_variable = { war_exhaustion_weekly_change = 0.003 }
-	}
-	else_if = { limit = { has_idea = all_adults_serve } 
-		add_to_variable = { war_exhaustion_weekly_change = 0.005 }
-	}
-	else_if = { limit = { has_idea = scraping_the_barrel } 
-		add_to_variable = { war_exhaustion_weekly_change = 0.008 }
-	}
-	
-	set_variable = {
-		var = war_exhaustion_surrender_progress_impact
-		value = ROOT.surrender_progress
-	}
-	
-	divide_variable = {
-		var = war_exhaustion_surrender_progress_impact
-		value = 100
-	}
-		
-	add_to_variable = {
-		var = war_exhaustion_weekly_change
-		value = war_exhaustion_surrender_progress_impact
-	}
-	
-	# CAPITULATION STOPGAP MEASURE
-	
+	# CAPITULATION STOPGAP — zero out accumulation for capitulated nations
 	if = {
 		limit = { has_capitulated = yes }
-	
 		set_variable = { war_exhaustion_weekly_change = 0 }
 	}
 	
-	# STATE CAPACITY BUFFER
-	# if = {
-	#	limit = { stability > 0.55 }
-	#	subtract_from_variable = { war_exhaustion_weekly_change = 0.002 }
-	# }
-	
-	# if = {
-	#	limit = { war_support > 0.60 }
-	#	subtract_from_variable = { war_exhaustion_weekly_change = 0.002 }
-	# }
-	
-	# COLLAPSE INERTIA
-	
-	# if = {
-	#	limit = { check_variable = { war_exhaustion_value > 0.90 } }
-	#	multiply_variable = { war_exhaustion_weekly_change = 0.6 }
-	# }
+	# WAR SUPPORT DAMPENER
+	# High war support = population motivated = WE grows slower
+	# war_support cannot be read as a numeric variable in effect scope — use threshold bands
+	# Bands approximate (1 - has_war_support* 0.5):
+	#   WS > 80%: ×0.55 (~-45% accumulation)
+	#   WS > 60%: ×0.65 (~-35% accumulation)
+	#   WS > 40%: ×0.75 (~-25% accumulation)
+	#   WS > 20%: ×0.85 (~-15% accumulation)
+	#   WS <= 20%: ×1.00 (no dampening — population is done)
+	# Only applies while at war — peace recovery unaffected
+	if = {
+		limit = {
+			has_war = yes
+			has_war_support > 0.80
+		}
+		multiply_variable = { war_exhaustion_weekly_change = 0.55 }
+		set_variable = { war_exhaustion_ws_display = 45 }
+	}
+	else_if = {
+		limit = {
+			has_war = yes
+			has_war_support > 0.60
+		}
+		multiply_variable = { war_exhaustion_weekly_change = 0.65 }
+		set_variable = { war_exhaustion_ws_display = 35 }
+	}
+	else_if = {
+		limit = {
+			has_war = yes
+			has_war_support > 0.40
+		}
+		multiply_variable = { war_exhaustion_weekly_change = 0.75 }
+		set_variable = { war_exhaustion_ws_display = 25 }
+	}
+	else_if = {
+		limit = {
+			has_war = yes
+			has_war_support > 0.20
+		}
+		multiply_variable = { war_exhaustion_weekly_change = 0.85 }
+		set_variable = { war_exhaustion_ws_display = 15 }
+	}
+	else = {
+		set_variable = { war_exhaustion_ws_display = 0 }
+	}
 
 	# PSYCHOLOGICAL SATURATION
-	
+	# Thresholds tightened: kicks in earlier (35/55/70/85 vs old 40/60/75/88)
+	# Top tier tightened to 0.20x (was 0.25x)
+	# Only applies to weekly accumulation — spike events bypass this naturally
 	if = {
-		limit = { check_variable = { war_exhaustion_value > 0.40 } }
+		limit = { 
+			check_variable = { war_exhaustion_value > 0.35 } 
+			check_variable = { war_exhaustion_weekly_change > 0 }
+		}
 		multiply_variable = { war_exhaustion_weekly_change = 0.80 }
 	}
 	if = {
-		limit = { check_variable = { war_exhaustion_value > 0.60 } }
+		limit = { 
+			check_variable = { war_exhaustion_value > 0.55 } 
+			check_variable = { war_exhaustion_weekly_change > 0 }
+		}
 		multiply_variable = { war_exhaustion_weekly_change = 0.60 }
 	}
 	if = {
-		limit = { check_variable = { war_exhaustion_value > 0.75 } }
+		limit = { 
+			check_variable = { war_exhaustion_value > 0.70 } 
+			check_variable = { war_exhaustion_weekly_change > 0 }
+		}
 		multiply_variable = { war_exhaustion_weekly_change = 0.40 }
 	}
 	if = {
-		limit = { check_variable = { war_exhaustion_value > 0.88 } }
-		multiply_variable = { war_exhaustion_weekly_change = 0.25 }
+		limit = { 
+			check_variable = { war_exhaustion_value > 0.85 } 
+			check_variable = { war_exhaustion_weekly_change > 0 }
+		}
+		multiply_variable = { war_exhaustion_weekly_change = 0.20 }
 	}
 	
 	# END PSYCHOLOGICAL SATURATION
@@ -217,10 +247,11 @@ reset_WE_var = {
 	verify_WE_to_WE_max = yes
 
 	set_variable = { we_stability_factor = war_exhaustion_value }
-	multiply_variable = { we_stability_factor = -0.75 }
+	multiply_variable = { we_stability_factor = -0.50 }
 	
+	# War support penalty capped at -75% (was -150% — mathematically meaningless floor)
 	set_variable = { we_war_support_factor = war_exhaustion_value }
-	multiply_variable = { we_war_support_factor = -1.5 }
+	multiply_variable = { we_war_support_factor = -0.75 }
 	
 	set_variable = { we_repair_speed_building_factor = war_exhaustion_value }
 	multiply_variable = { we_repair_speed_building_factor = -0.35 }

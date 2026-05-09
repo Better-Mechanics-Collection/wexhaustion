@@ -1,7 +1,7 @@
 ﻿l_russian:
   
  war_exhaustion:0 "общественная усталость от войны"
- war_exhaustion_tab:0 "§Yобщественная усталость от войны\n§!Value: §Y[?war_exhaustion_value|%2]§!\n\n§YВ настоящее время затронуты:§!\n\nМаксимальное значение: §Y[?war_exhaustion_max_value|%0]§![WE_at_peace]\n\n§YЕженедельное изменение: [?war_exhaustion_weekly_change|%%-2]§![WE_at_peace_change][WE_has_war_type][WE_war_score][WE_country_devastation][WE_economic_mobilisation][WE_manpower_mobilisation]\n\n§YПоследствия от текущего общественного недовольства:§!\nФактор стабильности: [?we_stability_factor|%=+]\nФактор поддержки войны: [?we_war_support_factor|%=+]\nСкорость ремонта здания: [?we_repair_speed_building_factor|%=+]\nЦель сопротивления: [?we_resistance_target|%=-]\nРост сопротивления: [?we_resistance_growth|%=-]\nФабричная продукция: [?we_army_morale_factor|%=+]\nСкорость строительства: [?we_repair_speed_building_factor|%=+]\nФактор морального духа армии: [?we_army_morale_factor|%=+]\nФактор морального духа ВМС: [?we_army_morale_factor|%=+]\nВероятность авиакатастроф: [?we_resistance_growth|%=-]\nМинимальный уровень подготовки: [?we_minimum_training_level|%=-]\nСкорость планирования: [?we_army_morale_factor|%=+]"
+ war_exhaustion_tab:0 "§Yобщественная усталость от войны\n§!Value: §Y[?war_exhaustion_value|%2]§!\n\n§YВ настоящее время затронуты:§!\n\nМаксимальное значение: §Y[?war_exhaustion_max_value|%0]§![WE_at_peace]\n\n§YЕженедельное изменение: [?war_exhaustion_weekly_change|%%-2]§![WE_at_peace_change][WE_has_war_type][WE_war_score][WE_country_devastation][WE_economic_mobilisation][WE_manpower_mobilisation][WE_war_support_display]\n\n§YПоследствия от текущего общественного недовольства:§!\nСтабильность: [?we_stability_factor|%=+]\nПоддержка войны: [?we_war_support_factor|%=+]\nСкорость ремонта здания: [?we_repair_speed_building_factor|%=+]\nЦель сопротивления: [?we_resistance_target|%=-]\nРост сопротивления: [?we_resistance_growth|%=-]\nФабричная продукция: [?we_army_morale_factor|%=+]\nСкорость строительства: [?we_repair_speed_building_factor|%=+]\nФактор морального духа армии: [?we_army_morale_factor|%=+]\nФактор морального духа ВМС: [?we_army_morale_factor|%=+]\nВероятность авиакатастроф: [?we_resistance_growth|%=-]\nМинимальный уровень подготовки: [?we_minimum_training_level|%=-]\nСкорость планирования: [?we_army_morale_factor|%=+]"
  war_exhaustion_modifiers:0 "общественная усталость от войны"
  war_exhaustion_desc:0 "Общественная усталость от войны — это общественное или политическое неодобрение продолжения длительного конфликта или войны. Обычно это приводит к недоверию к правительству или военному руководству и может вызвать протестные и антивоенные движения. Это часто влияет на уровень призыва и моральный дух вооруженных сил."
  war_exhaustion_value:0 "[?war_exhaustion_value|%0]"
@@ -10,46 +10,54 @@
  #SCRIPTED LOC
  WE_at_peace:0 "\n\nВ состоянии мира: §G-70.00%§!"
 
- WE_at_peace_change:0 "\nВ состоянии мира: §G-0.70%§!"
+ WE_at_peace_change:0 "\nВ состоянии мира (стаб >50%): §G-1.50%§! | (стаб >30%): §G-0.50%§!"
  
  WE_has_offensive_war:0 "\nНаступательная война: §R+0.20%§!"
- WE_has_defensive_war:0 "\nОборонительная война: §R+0.10%§!"
- WE_has_offensive_war_major:0 "\nКрупная наступательная война: §R+0.40%§!"
- WE_has_defensive_war_major:0 "\nКрупная наступательная война: §R+0.30%§!"
+ WE_has_defensive_war:0 "\nОборонительная война: §R+0.20%§!"
+ WE_has_offensive_war_major:0 "\nКрупная наступательная война: §R+0.30%§!"
+ WE_has_defensive_war_major:0 "\nКрупная оборонительная война: §R+0.30%§!"
  
- WE_war_score_80:0 "\nТерриториальная потеря: §R+1.50%§!"
- WE_war_score_50:0 "\nТерриториальная потеря: §R+1.00%§!"
- WE_war_score_30:0 "\nТерриториальная потеря: §R+0.80%§!"
- WE_war_score_15:0 "\nТерриториальная потеря: §R+0.40%§!"
- WE_war_score_5:0 "\nТерриториальная потеря: §R+0.20%§!"
+ WE_war_score_80:0 "\nТерриториальная потеря: §R+0.80%§!"
+ WE_war_score_50:0 "\nТерриториальная потеря: §R+0.50%§!"
+ WE_war_score_30:0 "\nТерриториальная потеря: §R+0.30%§!"
+ WE_war_score_15:0 "\nТерриториальная потеря: §R+0.20%§!"
+ WE_war_score_5:0 "\nТерриториальная потеря: §R+0.10%§!"
   
- WE_civilian_economy:0 "\nГражданская экономика: §G-0.50%§!"
+ WE_civilian_economy:0 "\nГражданская экономика: §Y+0.00%§!"
  WE_low_economic_mobilisation:0 "\nРанняя мобилизация: §R+0.20%§!"
- WE_partial_economic_mobilisation:0 "\nЧастичная мобилизация: §R+0.30%§!"
- WE_war_economy:0 "\nВоенная экономика: §R+0.50%§!"
+ WE_partial_economic_mobilisation:0 "\nЧастичная мобилизация: §R+0.40%§!"
+ WE_war_economy:0 "\nВоенная экономика: §R+0.60%§!"
  WE_tot_economic_mobilisation:0 "\nПолная мобилизация: §R+0.80%§!"
  
- WE_disarmed_nation:0 "\nРазоруженная нация: §G-0.50%§!" 
- WE_volunteer_only:0 "\nТолько добровольцы: §G-0.30%§!" 
- WE_extensive_conscription:0 "\nРасширенный призыв: §R+0.20%§!" 
- WE_service_by_requirement:0 "\nобязательная служба: §R+0.30%§!"
- WE_all_adults_serve:0 "\nвсе взрослые проходят службу: §R+0.50%§!"
- WE_scraping_the_barrel:0 "\nвсех под ружье: §R+0.80%§!"
+ WE_disarmed_nation:0 "\nРазоруженная нация: §G-0.10%§!"
+ WE_limited_conscription:0 "\nОграниченный призыв: §R+0.03%§!"
+ WE_extensive_conscription:0 "\nРасширенный призыв: §R+0.09%§!"
+ WE_service_by_requirement:0 "\nОбязательная служба: §R+0.21%§!"
+ WE_all_adults_serve:0 "\nВсе взрослые проходят службу: §R+0.46%§!"
+ WE_scraping_the_barrel:0 "\nВсех под ружье: §R+0.59%§!"
+ 
+ WE_war_support_high:0 "\nПоддержка войны (>80%): §G-45.00%§!"
+ WE_war_support_mid_high:0 "\nПоддержка войны (>60%): §G-35.00%§!"
+ WE_war_support_mid:0 "\nПоддержка войны (>40%): §G-25.00%§!"
+ WE_war_support_mid_low:0 "\nПоддержка войны (>20%): §Y-15.00%§!"
+ WE_war_support_low:0 "\nПоддержка войны (<=20%): §R+0.00%§!"
  
  
  #IDEA MODIFIERS
- WE_disarmed_nation_tt:0 "еженедельный прирост общественного недовольства от войны: §G-2.50%§!"
- WE_volunteer_only_tt:0 "еженедельный прирост общественного недовольства от войны: §G-1.50%§!"
+ WE_disarmed_nation_tt:0 "Еженедельный прирост общественного недовольства от войны: §G-0.10%§!"
+ WE_volunteer_only_tt:0 "Еженедельный прирост общественного недовольства от войны: §Y+0.00%§!"
  
- WE_civilian_economy_tt:0 "еженедельный прирост общественного недовольства от войны: §G-0.30%§!"
- WE_low_economic_mobilisation_tt:0 "еженедельный прирост общественного недовольства от войны: §R+0.20%§!"
- WE_partial_economic_mobilisation_tt:0 "еженедельный прирост общественного недовольства от войны: §R+0.30%§!"
- WE_war_economy_tt:0 "еженедельный прирост общественного недовольства от войны: §R+0.50%§!"
- WE_tot_economic_mobilisation_tt:0 "еженедельный прирост общественного недовольства от войны: §R+0.80%§!"
+ WE_civilian_economy_tt:0 "Еженедельный прирост общественного недовольства от войны: §Y+0.00%§!"
+ WE_low_economic_mobilisation_tt:0 "Еженедельный прирост общественного недовольства от войны: §R+0.20%§!"
+ WE_partial_economic_mobilisation_tt:0 "Еженедельный прирост общественного недовольства от войны: §R+0.40%§!"
+ WE_war_economy_tt:0 "Еженедельный прирост общественного недовольства от войны: §R+0.60%§!"
+ WE_tot_economic_mobilisation_tt:0 "Еженедельный прирост общественного недовольства от войны: §R+0.80%§!"
   
  #DECISIONS
  war_exhaustion_category:0 "общественная усталость от войны"
  war_exhaustion_category_desc:0 "Во время войны сохранение стабильного и единого фронта имеет решающее значение для успеха нашей нации. Голоса инакомыслящих, если их не остановить, могут подорвать саму основу наших военных усилий и поставить под угрозу благополучие нашего народа. Военное истощение — это надвигающаяся угроза, к которой мы должны отнестись со стратегической решимостью."
+ we_home_front_address:0 "Обратиться к тылу"
+ we_home_front_address_desc:0 "Посвятить время публичным выступлениям, радиотрансляциям и местным общественным мероприятиям, чтобы напомнить гражданам о деле, за которое они сражаются. Небольшие, но последовательные усилия по поддержанию морального духа тыла."
  we_war_hero_narratives:0 "Создать истории о героях войны"
  we_war_hero_narratives_desc:0 "Выявить и продвигать людей в армии, которые продемонстрировали исключительную храбрость или жертвенность. Разработать подробные рассказы об их опыте и представить их как национальных героев."
  we_war_bond_drives:0 "Кампании по выпуску военных облигаций"
@@ -73,3 +81,8 @@
  change_WE_value_effect_tt:0 "Изменить истощение от войны на [?temp_war_exhaustion_value|%0-]"
  has_WE_value_greater_trigger_tt:0 "Больше, чем §Y[?temp_war_exhaustion_value|%0]§! общественной усталости от войны"
  has_WE_value_lesser_trigger_tt:0 "Меньше, чем §Y[?temp_war_exhaustion_value|%0]§! общественной усталости от войны"
+ 
+ WE_psychological_saturation_4: "\nФактор психологического насыщения: §G-80.00%§!"
+ WE_psychological_saturation_3: "\nФактор психологического насыщения: §G-60.00%§!"
+ WE_psychological_saturation_2: "\nФактор психологического насыщения: §G-40.00%§!"
+ WE_psychological_saturation_1: "\nФактор психологического насыщения: §G-20.00%§!"
