@@ -1,7 +1,8 @@
 ﻿l_english:
   
  war_exhaustion:0 "War Exhaustion"
- war_exhaustion_tab:0 "§YWar Exhaustion\n§!Value: §Y[?war_exhaustion_value|%2]§!\n\n§YCurrently Affected by:§!\n\nMax Value: §Y[?war_exhaustion_max_value|%0]§![WE_at_peace]\n\n§YWeekly Change: [?war_exhaustion_weekly_change|%%-2]§![WE_at_peace_change][WE_has_war_type][WE_economic_mobilisation][WE_manpower_mobilisation][WE_war_support_display]\nSurrender Progress: [?ROOT.war_exhaustion_surrender_progress_impact|%-]\nLength of Wartime: [?ROOT.war_exhaustion_lenght_of_war_impact|%-][WE_psychological_saturation]\n\n§YEffects from our current War Exhaustion:§!\nStability: [?we_stability_factor|%=+]\nWar Support: [?we_war_support_factor|%=+]\nBuilding Repair Speed: [?we_repair_speed_building_factor|%=+]\nResistance Target: [?we_resistance_target|%=-]\nResistance Growth: [?we_resistance_growth|%=-]\nFactory Output: [?we_army_morale_factor|%=+]\nConstruction Speed: [?we_repair_speed_building_factor|%=+]\nArmy Morale Factor: [?we_army_morale_factor|%=+]\nNaval Morale Factor: [?we_army_morale_factor|%=+]\nAir Accidents Chance: [?we_resistance_growth|%=-]\nPlanning Speed: [?we_army_morale_factor|%=+]"
+ war_exhaustion_tab:0 "§YWar Exhaustion\n§!Value: §Y[?war_exhaustion_value|%2]§!\n\n§YCurrently Affected by:§!\n\nMax Value: §Y[?war_exhaustion_max_value|%0]§![WE_at_peace]\n\n§YWeekly Change: [?war_exhaustion_weekly_change|%%-2]§![WE_at_peace_change][WE_economic_mobilisation][WE_manpower_mobilisation][WE_war_support_display]\nSurrender Progress: [?ROOT.war_exhaustion_surrender_progress_impact|%-]\nLength of Wartime: [?ROOT.war_exhaustion_lenght_of_war_impact|%-][WE_psychological_saturation]\n\n§YEffects from our current War Exhaustion:§!\nWar Support (exponential): [?we_war_support_factor|%=+]\nBuilding Repair Speed: [?we_repair_speed_building_factor|%=+]\nResistance Target: [?we_resistance_target|%=-]\nResistance Growth: [?we_resistance_growth|%=-]\nFactory Output: [?we_army_morale_factor|%=+]\nConstruction Speed: [?we_repair_speed_building_factor|%=+]\nArmy Morale Factor: [?we_army_morale_factor|%=+]\nNaval Morale Factor: [?we_army_morale_factor|%=+]\nAir Accidents Chance: [?we_resistance_growth|%=-]\nPlanning Speed: [?we_army_morale_factor|%=+]"
+ war_exhaustion_modifiers:0 "War Exhaustion"
  war_exhaustion_modifiers:0 "War Exhaustion"
  war_exhaustion_desc:0 "War Exhaustion is the public or political disapproval for the continuation of a prolonged conflict or war. It normally leads to a distrust in government or military leadership and can spark protest and anti-war movements. Rates of conscription and the morale of the armed forces are often affected by it."
  war_exhaustion_value:0 "[?war_exhaustion_value|%0]"
@@ -11,11 +12,6 @@
  WE_at_peace:0 "\n\nAt peace: §G-70.00%§!"
 
  WE_at_peace_change:0 "\nAt peace: \n If Stability > 60%: §G-1.00%§! \n If Stability > 30%: §G-0.50%§! \n If Stability < 30%: §YNo Passive Exhaustion Recovery§! \n"
- 
- WE_has_offensive_war:0 "\nOffensive war: §R+0.20%§!"
- WE_has_defensive_war:0 "\nDefensive war: §R+0.20%§!"
- WE_has_offensive_war_major:0 "\nMajor Offensive war: §R+0.30%§!"
- WE_has_defensive_war_major:0 "\nMajor Defensive war: §R+0.30%§!"
  
  WE_war_score_80:0 "\nTerritory Loss: §R+0.80%§!"
  WE_war_score_50:0 "\nTerritory Loss: §R+0.50%§!"

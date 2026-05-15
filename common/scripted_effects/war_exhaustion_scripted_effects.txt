@@ -60,59 +60,20 @@ reset_WE_var = {
 	if = {
 		limit = { has_war = no }
 		
-		subtract_from_variable = { war_exhaustion_max_value = 0.70 }
+		subtract_from_variable = { war_exhaustion_max_value = 0.60 }
 		
 		# PEACETIME RECOVERY — stability-gated, not free
 		if = {
 			limit = { has_stability > 0.60 }
-			subtract_from_variable = { war_exhaustion_weekly_change = 0.010 }
+			subtract_from_variable = { war_exhaustion_weekly_change = 0.0070 }
 		}
 		else_if = {
 			limit = { has_stability > 0.30 }
-			subtract_from_variable = { war_exhaustion_weekly_change = 0.005 }
+			subtract_from_variable = { war_exhaustion_weekly_change = 0.0035 }
 		}
 		# stability <= 0.30: no passive recovery
 	}
 	else = {
-		# WAR TYPE BASE RATES
-		# Defensive wars now equal offensive — historically defenders suffer just as much
-		# Major vs minor gap maintained
-		if = { 
-			limit = {
-				AND = {
-					has_offensive_war = yes 
-					has_war_with_major = yes
-				}
-			} 
-			add_to_variable = { war_exhaustion_weekly_change = 0.003 }
-		}
-		else_if = { 
-			limit = { 
-				AND = {
-					has_defensive_war = yes
-					has_war_with_major = yes
-				}
-			} 
-			add_to_variable = { war_exhaustion_weekly_change = 0.003 }
-		}
-		else_if = { 
-			limit = { 
-				AND = {
-					has_offensive_war = yes
-					has_war_with_major = no
-				}
-			} 
-			add_to_variable = { war_exhaustion_weekly_change = 0.002 }
-		}
-		else_if = { 
-			limit = { 
-				AND = {
-					has_defensive_war = yes
-					has_war_with_major = no
-				}
-			} 
-			add_to_variable = { war_exhaustion_weekly_change = 0.002 }
-		}
 		
 		# ECONOMY EXHAUSTION — continuous, baseline is civilian economy (CG expected = 0.35)
 		# Anything below 0.35 adds exhaustion proportionally
@@ -123,7 +84,7 @@ reset_WE_var = {
 			limit = { check_variable = { war_exhaustion_cg_factor < 0 } }
 			set_variable = { war_exhaustion_cg_factor = 0 }
 		}
-		multiply_variable = { war_exhaustion_cg_factor = 0.04 }
+		multiply_variable = { war_exhaustion_cg_factor = 0.03 }
 		add_to_variable = { war_exhaustion_weekly_change = war_exhaustion_cg_factor }
 		
 		# CONSCRIPTION EXHAUSTION — continuous, baseline is volunteer only (conscription = 0.015)
@@ -246,12 +207,16 @@ reset_WE_var = {
 	
 	verify_WE_to_WE_max = yes
 
-	set_variable = { we_stability_factor = war_exhaustion_value }
-	multiply_variable = { we_stability_factor = -0.50 }
-	
-	# War support penalty capped at -75% (was -150% — mathematically meaningless floor)
+	# WAR SUPPORT PENALTY — exponential curve (WE squared × -0.75)
+	# Small early, accelerates hard at high WE — historically accurate
+	# At 50% WE: -(0.50²) × 0.75 = -0.1875 (-18.75%)
+	# At 75% WE: -(0.75²) × 0.75 = -0.4219 (-42.19%)
+	# At 100% WE: -(1.00²) × 0.75 = -0.75   (-75.00%)
 	set_variable = { we_war_support_factor = war_exhaustion_value }
-	multiply_variable = { we_war_support_factor = -0.75 }
+	set_variable = { we_ws_squared = war_exhaustion_value }
+	multiply_variable = { we_ws_squared = we_war_support_factor }
+	multiply_variable = { we_ws_squared = -0.75 }
+	set_variable = { we_war_support_factor = we_ws_squared }
 	
 	set_variable = { we_repair_speed_building_factor = war_exhaustion_value }
 	multiply_variable = { we_repair_speed_building_factor = -0.35 }
@@ -260,13 +225,13 @@ reset_WE_var = {
 	multiply_variable = { we_army_morale_factor = -0.25 }
 	
 	set_variable = { we_minimum_training_level = war_exhaustion_value }
-	multiply_variable = { we_minimum_training_level = 0.25 }
+	multiply_variable = { we_minimum_training_level = 0.45 }
 	
 	set_variable = { we_resistance_target = war_exhaustion_value }
-	multiply_variable = { we_resistance_target = 0.25 }
+	multiply_variable = { we_resistance_target = 0.40 }
 	
 	set_variable = { we_resistance_growth = war_exhaustion_value }
-	multiply_variable = { we_resistance_growth = 0.25 }
+	multiply_variable = { we_resistance_growth = 0.40 }
 	
 	if = {
 		limit = {

@@ -34,38 +34,7 @@ defined_text = {
 		localization_key = WE_has_war
 	}
 }
-defined_text = {
-	name = WE_has_war_type
 
-	text = {
-		trigger = {
-			has_offensive_war = yes
-			has_war_with_major = no
-		}
-		localization_key = WE_has_offensive_war
-	}
-	text = {
-		trigger = {
-			has_defensive_war = yes
-			has_war_with_major = no
-		}
-		localization_key = WE_has_defensive_war
-	}
-	text = {
-		trigger = {
-			has_offensive_war = yes
-			has_war_with_major = yes
-		}
-		localization_key = WE_has_offensive_war_major
-	}
-	text = {
-		trigger = {
-			has_defensive_war = yes
-			has_war_with_major = yes
-		}
-		localization_key = WE_has_defensive_war_major
-	}
-}
 defined_text = {
 	name = WE_war_score
 

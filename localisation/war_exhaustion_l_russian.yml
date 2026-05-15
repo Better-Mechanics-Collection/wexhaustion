@@ -1,7 +1,7 @@
 ﻿l_russian:
   
  war_exhaustion:0 "общественная усталость от войны"
- war_exhaustion_tab:0 "§Yобщественная усталость от войны\n§!Value: §Y[?war_exhaustion_value|%2]§!\n\n§YВ настоящее время затронуты:§!\n\nМаксимальное значение: §Y[?war_exhaustion_max_value|%0]§![WE_at_peace]\n\n§YЕженедельное изменение: [?war_exhaustion_weekly_change|%%-2]§![WE_at_peace_change][WE_has_war_type][WE_war_score][WE_country_devastation][WE_economic_mobilisation][WE_manpower_mobilisation][WE_war_support_display]\n\n§YПоследствия от текущего общественного недовольства:§!\nСтабильность: [?we_stability_factor|%=+]\nПоддержка войны: [?we_war_support_factor|%=+]\nСкорость ремонта здания: [?we_repair_speed_building_factor|%=+]\nЦель сопротивления: [?we_resistance_target|%=-]\nРост сопротивления: [?we_resistance_growth|%=-]\nФабричная продукция: [?we_army_morale_factor|%=+]\nСкорость строительства: [?we_repair_speed_building_factor|%=+]\nФактор морального духа армии: [?we_army_morale_factor|%=+]\nФактор морального духа ВМС: [?we_army_morale_factor|%=+]\nВероятность авиакатастроф: [?we_resistance_growth|%=-]\nМинимальный уровень подготовки: [?we_minimum_training_level|%=-]\nСкорость планирования: [?we_army_morale_factor|%=+]"
+ war_exhaustion_tab:0 "§Yобщественная усталость от войны\n§!Value: §Y[?war_exhaustion_value|%2]§!\n\n§YВ настоящее время затронуты:§!\n\nМаксимальное значение: §Y[?war_exhaustion_max_value|%0]§![WE_at_peace]\n\n§YЕженедельное изменение: [?war_exhaustion_weekly_change|%%-2]§![WE_at_peace_change][WE_has_war_type][WE_war_score][WE_country_devastation][WE_economic_mobilisation][WE_manpower_mobilisation][WE_war_support_display]\n\n§YПоследствия от текущего общественного недовольства:§!\nСтабильность: [?we_stability_factor|%=+]\nПоддержка войны (экспоненциальная): [?we_war_support_factor|%=+]\nСкорость ремонта здания: [?we_repair_speed_building_factor|%=+]\nЦель сопротивления: [?we_resistance_target|%=-]\nРост сопротивления: [?we_resistance_growth|%=-]\nФабричная продукция: [?we_army_morale_factor|%=+]\nСкорость строительства: [?we_repair_speed_building_factor|%=+]\nФактор морального духа армии: [?we_army_morale_factor|%=+]\nФактор морального духа ВМС: [?we_army_morale_factor|%=+]\nВероятность авиакатастроф: [?we_resistance_growth|%=-]\nМинимальный уровень подготовки: [?we_minimum_training_level|%=-]\nСкорость планирования: [?we_army_morale_factor|%=+]"
  war_exhaustion_modifiers:0 "общественная усталость от войны"
  war_exhaustion_desc:0 "Общественная усталость от войны — это общественное или политическое неодобрение продолжения длительного конфликта или войны. Обычно это приводит к недоверию к правительству или военному руководству и может вызвать протестные и антивоенные движения. Это часто влияет на уровень призыва и моральный дух вооруженных сил."
  war_exhaustion_value:0 "[?war_exhaustion_value|%0]"
@@ -11,11 +11,6 @@
  WE_at_peace:0 "\n\nВ состоянии мира: §G-70.00%§!"
 
  WE_at_peace_change:0 "\nВ состоянии мира (стаб >50%): §G-1.50%§! | (стаб >30%): §G-0.50%§!"
- 
- WE_has_offensive_war:0 "\nНаступательная война: §R+0.20%§!"
- WE_has_defensive_war:0 "\nОборонительная война: §R+0.20%§!"
- WE_has_offensive_war_major:0 "\nКрупная наступательная война: §R+0.30%§!"
- WE_has_defensive_war_major:0 "\nКрупная оборонительная война: §R+0.30%§!"
  
  WE_war_score_80:0 "\nТерриториальная потеря: §R+0.80%§!"
  WE_war_score_50:0 "\nТерриториальная потеря: §R+0.50%§!"

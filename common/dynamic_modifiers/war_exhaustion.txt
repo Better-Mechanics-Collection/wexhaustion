@@ -1,7 +1,6 @@
 war_exhaustion_modifiers = {
     enable = { always = yes }
 	
-	stability_factor = we_stability_factor
 	war_support_factor = we_war_support_factor
 	repair_speed_arms_factory_factor = we_repair_speed_building_factor
 	repair_speed_industrial_complex_factor = we_repair_speed_building_factor
