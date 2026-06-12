@@ -4,5 +4,5 @@ tags={
 }
 name="Better Mechanics : War Exhaustion"
 picture="Thumbnail.png"
-supported_version="1.18.*"
+supported_version="1.19.*"
 remote_file_id="3132697120"
